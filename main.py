@@ -2,10 +2,12 @@ import numpy as np
 import matplotlib.pyplot as graph
 
 from neurone import Neurone
+from reseau import Reseau
 from sklearn.datasets import make_blobs
+from sklearn.datasets import make_circles
 
 
-def main():
+def _neurone_main():
     ## Datasets
     X, Y = make_blobs(n_samples=100, n_features=2, centers=2, random_state=0)
     Y = Y.reshape((Y.shape[0], 1))
@@ -32,4 +34,29 @@ def main():
     graph.show()
 
 
-main()
+def _reseau_main():
+    ## Datasets
+    X, Y = make_circles(n_samples=100, noise=0.1, factor=0.3, random_state=0)
+    X = X.T
+    Y = Y.reshape((1, Y.shape[0]))
+
+    ## Programme
+    format = [X.shape[0], 16, 16, 16, 1]
+    r = Reseau(format, X, Y)
+    pred = r._learn(1000)
+    print(pred)
+
+    # Frontière de décision
+
+    # Plot courbe d'apprentissage
+    graph.figure(figsize=(12, 4))
+    graph.subplot(1, 2, 1)
+    graph.plot(r.app[:, 0], label='train loss')
+    graph.legend()
+    graph.subplot(1, 2, 2)
+    graph.plot(r.app[:, 1], label='train acc')
+    graph.legend()
+    graph.show()
+
+
+_reseau_main()

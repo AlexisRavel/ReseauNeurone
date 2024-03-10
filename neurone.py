@@ -78,7 +78,7 @@ class Neurone:
 
     # Entrée: Le nombre d'itération
     # Traitement: Update les paramètres et calcul le cout du modele
-    # Sortie: Rien
+    # Sortie: La vraisemblance du modèle à la fin de l'apprentissage
     def _learn(self, iter):
         for i in tqdm(range(iter)):
             self.A = self._calcul_modele(self.X)
